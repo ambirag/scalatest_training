@@ -1,0 +1,8 @@
+[0m[[0minfo[0m] [0m[32mHelloWorld:[0m[0m
+[0m[[0minfo[0m] [0m[32mMaking sure that the docweb site is working  [0m[0m
+[0m[[0minfo[0m] [0m[32mFeature: Hotel Search[0m[0m
+[0m[[0minfo[0m] [0m[32m  Scenario: Search for a Hotel from Homepageof UK[0m[0m
+[0m[[0minfo[0m] [0m[32m    Given The user lands on the homepage [0m[0m
+[0m[[0minfo[0m] [0m[32m    When The user enters a destination [0m[0m
+[0m[[0minfo[0m] [0m[32m    And Click on search [0m[0m
+[0m[[0minfo[0m] [0m[32m    Then User should land on Hotel Search Results page [0m[0m
