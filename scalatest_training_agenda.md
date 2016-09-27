@@ -5,8 +5,16 @@
 
 # Setup
 
-[Install SBT] (http://www.scala-sbt.org/download.html) or
-1. browser install sbt
+ - [Install SBT] (http://www.scala-sbt.org/download.html) or
+ - browser install sbt
+
+# Importing sbt project into Intellij
+- close IntelliJ
+- backup whole project folder
+- delete .idea folder
+- delete target folder
+- delete project/target folder
+- reopen IntelliJ and import as a sbt project
 
 # Introducing Different UI Automation Frameworks
 #### How to choose a framework?
