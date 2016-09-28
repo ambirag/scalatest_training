@@ -7,6 +7,7 @@
 
  - [Install SBT] (http://www.scala-sbt.org/download.html) or
  - browser install sbt
+ - [ScalaTest with IntelliJ] (http://www.scalatest.org/user_guide/using_scalatest_with_intellij)
 
 # Importing sbt project into Intellij
 - close IntelliJ
