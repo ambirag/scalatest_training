@@ -17,13 +17,16 @@
 - delete project/target folder
 - reopen IntelliJ and import as a sbt project
 
-# Introducing Different UI Automation Frameworks
-#### How to choose a framework?
+# Class I - Sep 26th 2016 - Tuesday
+## Introducing Different UI Automation Frameworks
+1. How to choose a framework?
+2. Scala CheetSheet
+* [Scala Test Syntax Cheesheets](http://docs.scala-lang.org/cheatsheets/)
+3. Specs
 
-1. [Scala Test Syntax Cheesheets](http://docs.scala-lang.org/cheatsheets/)
-2. Specs
-3. Tags
-4. Template
+# Class II - 
+1. Tags
+2. Template
   * Land on a page
   * Wait for page to load
   * Check for element before interacting
