@@ -1,9 +1,8 @@
 
 package helloworld.spec
 
-import org.openqa.selenium.interactions.Actions
-import org.openqa.selenium.{By, WebElement, WebDriver}
-import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.firefox.MarionetteDriver
+import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.selenium.WebBrowser
 import org.scalatest.{FeatureSpec, _}
@@ -22,7 +21,7 @@ object Smoke extends Tag("com.expedia.Smoke")
 
 class HelloWorld extends AcceptanceSpec {
 
-  implicit val webDriver: WebDriver = new FirefoxDriver()
+  implicit val webDriver: WebDriver = new MarionetteDriver() //FirefoxDriver()
 
   val host = "http://www.expedia.ie/"
   info("Making sure that the docweb site is working ")
@@ -42,16 +41,16 @@ class HelloWorld extends AcceptanceSpec {
       val hotelTab: WebElement =Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
       click on hotelTab
       var destination: TextField = Try(textField("hotel-destination")(webDriver)).getOrElse(null)
-      new Actions(webDriver).moveToElement(webDriver.findElement(By.id("hotel-destination"))).perform();
+      //new Actions(webDriver).moveToElement(webDriver.findElement(By.id("hotel-destination"))).perform();
       //textField("hotel-destination").value = "Cheese!"
       destination.value ="Las Vegas"
       pageTitle should include("Hotels: from cheap")
 
-     And ("Click on search")
+      And ("Click on search")
       val searchButton: WebElement = Try(webDriver.findElement(By.id("search-button"))).getOrElse(null)
       click on searchButton
 
-     Then ("User should land on Hotel Search Results page")
+      Then ("User should land on Hotel Search Results page")
       currentUrl.contains("Hotel-Search")
       quit()
      }
