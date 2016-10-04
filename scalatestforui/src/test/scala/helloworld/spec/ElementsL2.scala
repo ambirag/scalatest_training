@@ -145,7 +145,9 @@ class Lesson2 extends AcceptanceSpec with ParallelTestExecution  {
  def isSiteUp() = {
 
    go to "http://www.expedia.co.uk/isWorking"
-   pageSource.contains("Status is success")
+   eventually {
+     pageSource.contains("Status is success")
+   }
  }
 }
 
