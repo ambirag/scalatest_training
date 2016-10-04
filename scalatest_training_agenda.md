@@ -27,8 +27,15 @@
 * [Scala Test Syntax Cheesheets](http://docs.scala-lang.org/cheatsheets/)
 3. Specs
 
-# Class II - 
+# Class II - Oct 4th 2016 - Tuesday
 1. Tags
+2. Querying other elements (Checkbox, Texifield,etc)
+3. Parallel / Sequence Execution
+4. Before / After hooks
+5. Quit vs Close
+6. Ignore scenario / Ignore feature
+7. Regular asserts vs CheckPoints with AssertResults
+8. Assume
 2. Template
   * Land on a page
   * Wait for page to load
