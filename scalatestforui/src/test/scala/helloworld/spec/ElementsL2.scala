@@ -26,9 +26,9 @@ class Lesson2 extends AcceptanceSpec with ParallelTestExecution  {
   val scriptTimeout = 30
   val pageLoadTimeout = 30
 
-
+  System.setProperty("webdriver.chrome.driver","./src/test/resources/chromedriver")
   implicit val webDriver: WebDriver = new ChromeDriver()
-   val timeouts = webDriver.manage().timeouts()
+  val timeouts = webDriver.manage().timeouts()
   timeouts.pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS)
   timeouts.setScriptTimeout(scriptTimeout, TimeUnit.SECONDS)
   timeouts.implicitlyWait(0, TimeUnit.SECONDS)
