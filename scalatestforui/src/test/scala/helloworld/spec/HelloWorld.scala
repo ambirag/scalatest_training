@@ -1,7 +1,8 @@
 
 package helloworld.spec
 
-import org.openqa.selenium.firefox.MarionetteDriver
+//import org.openqa.selenium.firefox.MarionetteDriver
+import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.selenium.WebBrowser
@@ -13,20 +14,20 @@ import scala.util.Try
   * Created by rambighananthan on 9/26/16.
   */
 
-abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matchers with WebBrowser with Eventually {
-
+abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matchers with WebBrowser with Eventually with BeforeAndAfterEach with BeforeAndAfterAll {
+  override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected = true
 }
-
-object Smoke extends Tag("com.expedia.Smoke")
-
+@Ignore
 class HelloWorld extends AcceptanceSpec {
 
-  implicit val webDriver: WebDriver = new MarionetteDriver() //FirefoxDriver()
+
+  implicit val webDriver: WebDriver = new FirefoxDriver() //FirefoxDriver()
+  object Smoke extends Tag("com.expedia.Smoke")
 
   val host = "http://www.expedia.ie/"
   info("Making sure that the docweb site is working ")
 
- feature("Hotel Search") {
+  feature("Hotel Search") {
     scenario(s"Search for a Hotel from Homepageof UK",Smoke) {
      Given("The user lands on the homepage")
 
@@ -52,9 +53,19 @@ class HelloWorld extends AcceptanceSpec {
 
       Then ("User should land on Hotel Search Results page")
       currentUrl.contains("Hotel-Search")
-      quit()
+
      }
   }
 
+
+  override def afterAll() {
+    try {
+      super.afterAll
+    } finally {
+      if (null != webDriver) {
+        webDriver.quit()
+      }
+    }
+  }
 }
 
