@@ -2,8 +2,11 @@
 package helloworld.spec
 
 //import org.openqa.selenium.firefox.MarionetteDriver
-import org.openqa.selenium.firefox.FirefoxDriver
-import org.openqa.selenium.{By, WebDriver, WebElement}
+import java.util.concurrent.TimeUnit
+
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
+import org.openqa.selenium.{TimeoutException, By, WebDriver, WebElement}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.selenium.WebBrowser
 import org.scalatest.{FeatureSpec, _}
@@ -17,17 +20,28 @@ import scala.util.Try
 abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matchers with WebBrowser with Checkpoints with Eventually with BeforeAndAfterEach with BeforeAndAfterAll {
   override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected = true
 }
-@Ignore
+
 class HelloWorld extends AcceptanceSpec {
 
+  val implicitTimeout = 20
+  val scriptTimeout = 30
+  val pageLoadTimeout = 30
 
-  implicit val webDriver: WebDriver = new FirefoxDriver() //FirefoxDriver()
+  implicit val webDriver: WebDriver = new ChromeDriver() //FirefoxDriver()
   object Smoke extends Tag("com.expedia.Smoke")
 
-  val host = "http://www.expedia.ie/"
+  val host = "http://www.expedia.co.uk/"
   info("Making sure that the docweb site is working ")
 
   feature("Hotel Search") {
+
+
+    val timeouts = webDriver.manage().timeouts()
+    timeouts.pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS)
+    timeouts.setScriptTimeout(scriptTimeout, TimeUnit.SECONDS)
+    timeouts.implicitlyWait(implicitTimeout, TimeUnit.SECONDS)
+
+
     scenario(s"Search for a Hotel from Homepageof UK",Smoke) {
      Given("The user lands on the homepage")
 
@@ -45,7 +59,8 @@ class HelloWorld extends AcceptanceSpec {
       //new Actions(webDriver).moveToElement(webDriver.findElement(By.id("hotel-destination"))).perform();
       //textField("hotel-destination").value = "Cheese!"
       destination.value ="Las Vegas"
-      pageTitle should include("Hotels: from cheap")
+      closeTypeAhead
+      pageTitle should include("Travel Deals")
 
       And ("Click on search")
       val searchButton: WebElement = Try(webDriver.findElement(By.id("search-button"))).getOrElse(null)
@@ -76,6 +91,25 @@ class HelloWorld extends AcceptanceSpec {
         webDriver.quit()
       }
     }
+  }
+
+  def closeTypeAhead = {
+
+    val typeAheadClose: WebElement = Try(webDriver.findElement(By.id("typeahead-close"))).getOrElse(null)
+    try {
+      val wait = new WebDriverWait(webDriver, 5)
+      wait.until(ExpectedConditions.elementToBeClickable(By.id("typeahead-close")))
+      if (typeAheadClose != null)
+      {
+        typeAheadClose.click
+      }
+    }
+    catch {
+      case e: TimeoutException => e
+      case b: Exception => b
+      case n: NullPointerException => n
+    }
+
   }
 }
 
