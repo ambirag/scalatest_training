@@ -14,7 +14,7 @@ import scala.util.Try
   * Created by rambighananthan on 9/26/16.
   */
 
-abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matchers with WebBrowser with Eventually with BeforeAndAfterEach with BeforeAndAfterAll {
+abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matchers with WebBrowser with Checkpoints with Eventually with BeforeAndAfterEach with BeforeAndAfterAll {
   override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected = true
 }
 @Ignore
@@ -61,6 +61,16 @@ class HelloWorld extends AcceptanceSpec {
   override def afterAll() {
     try {
       super.afterAll
+    } finally {
+      if (null != webDriver) {
+        webDriver.quit()
+      }
+    }
+  }
+
+  override def afterEach() {
+    try {
+      super.afterEach
     } finally {
       if (null != webDriver) {
         webDriver.quit()
