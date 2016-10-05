@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit
 import helloworld.spec.pagemodel.HomePage
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
-import org.scalatest.time.{Seconds, Span}
+import org.scalatest.time.{Millis, Seconds, Span}
 
 //import org.openqa.selenium.firefox.MarionetteDriver
 import org.openqa.selenium.{TimeoutException, By, WebDriver, WebElement}
@@ -30,7 +30,7 @@ class Lesson2 extends AcceptanceSpec with ParallelTestExecution  {
 
   System.setProperty("webdriver.chrome.driver","./src/test/resources/chromedriver")
   implicit val webDriver: WebDriver = new ChromeDriver()
-  implicit override val patienceConfig = PatienceConfig(timeout = scaled(Span(120, Seconds)), interval = scaled(Span(1, Seconds)))
+  implicit override val patienceConfig = PatienceConfig(timeout = scaled(Span(40, Seconds)), interval = scaled(Span(200, Millis)))
 
 
   val host = "http://www.expedia.co.uk/"
@@ -47,11 +47,8 @@ class Lesson2 extends AcceptanceSpec with ParallelTestExecution  {
 
       Given("The user lands on the homepage")
       go to host
-      assertResult(true, "Home page loading takes more time ") {
-        eventually(timeout(scaled(Span(120, Seconds))), interval(scaled(Span(5, Seconds)))) {
-          isPageFinishedLoading
-        }
-      }
+
+      assertResult(Succeeded, "Home page loading takes more time ") { eventually { isPageFinishedLoading shouldBe true  } }
 
       When("The user enters a destination")
       val hotelTab: WebElement = Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
@@ -73,6 +70,7 @@ class Lesson2 extends AcceptanceSpec with ParallelTestExecution  {
       currentUrl.contains("Hotel-Search")
     }
 
+    //====================================================
 
     scenario(s"Search for a Hotel from Homepageof UK 2", L2) {
 
@@ -80,17 +78,14 @@ class Lesson2 extends AcceptanceSpec with ParallelTestExecution  {
 
       Given("The user lands on the homepage")
       go to host
-      assertResult(true, "Home page loading takes more time ") {
-        eventually(timeout(scaled(Span(120, Seconds))), interval(scaled(Span(5, Seconds)))) {
-          isPageFinishedLoading
-        }
+      assertResult(Succeeded, "Home page loading takes more time ") {
+        eventually { isPageFinishedLoading shouldBe true }
       }
 
       When("The user enters a destination")
       val homePageHotelTab: WebElement = Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
-      eventually {
-        homePageHotelTab.isDisplayed
-      }
+
+      eventually { assertResult(true,"home page SW takes more time to show hotels tab") { homePageHotelTab.isDisplayed } }
 
       click on homePageHotelTab
       var destinationText: TextField = Try(textField("hotel-destination")(webDriver)).getOrElse(null)
@@ -100,33 +95,28 @@ class Lesson2 extends AcceptanceSpec with ParallelTestExecution  {
 
       //based on elements check the status using eventually
       val checkbox = webDriver.findElement(By.id("hotel-add-flight-checkbox"))
-      eventually {
-        assertResult(Succeeded, "Check box to select Add a flight is not selected by default") {
-          checkbox.isSelected shouldBe false
-        }
+      eventually { assertResult(Succeeded, "Check box to select Add a flight is not selected by default") { checkbox.isSelected shouldBe false }
       }
       //set and verify for a reliable automation
       val adult: SingleSel = Try(singleSel("hotel-1-adults")(webDriver)).getOrElse(null)
       adult.value = "1"
-     //verify what you set immediately
-      assertResult(Succeeded, "Numbe of adults should be 1") {
-        adult.value shouldBe "1"
-      }
+      //verify what you set immediately
+      assertResult(Succeeded, "Numbe of adults should be 1") { adult.value shouldBe "1"}
 
-     val homePage = new HomePage(webDriver)
-     //bad way to assert
-     homePage.hotelSearchWizard.adult.isDisplayed shouldBe true
-     homePage.hotelSearchWizard.checkinDate.isDisplayed shouldBe true
-     homePage.hotelSearchWizard.destination.isDisplayed shouldBe true
+      val homePage = new HomePage(webDriver)
+      //bad way to assert
+      homePage.hotelSearchWizard.adult.isDisplayed shouldBe true
+      homePage.hotelSearchWizard.checkinDate.isDisplayed shouldBe true
+      homePage.hotelSearchWizard.destination.isDisplayed shouldBe true
 
-     //best practice for assert
-     val cp = new Checkpoint
+      //best practice for assert
+      val cp = new Checkpoint
 
-       cp {assertResult(Succeeded,"Adult not displayed"){ homePage.hotelSearchWizard.adult.isDisplayed shouldBe true }}
-       cp {assertResult(Succeeded,"checkin date is not displayed") {homePage.hotelSearchWizard.checkinDate.isDisplayed shouldBe true}}
-       cp {assertResult(Succeeded,"HotelsearchDestination is not displayed") { homePage.hotelSearchWizard.destination.isDisplayed shouldBe true}}
+      cp {assertResult(Succeeded,"Adult not displayed"){ homePage.hotelSearchWizard.adult.isDisplayed shouldBe true }}
+      cp {assertResult(Succeeded,"checkin date is not displayed") {homePage.hotelSearchWizard.checkinDate.isDisplayed shouldBe true}}
+      cp {assertResult(Succeeded,"HotelsearchDestination is not displayed") { homePage.hotelSearchWizard.destination.isDisplayed shouldBe true}}
 
-       cp.reportAll()
+      cp.reportAll()
 
       And("Click on search")
       val searchButton: WebElement = Try(webDriver.findElement(By.id("search-button"))).getOrElse(null)

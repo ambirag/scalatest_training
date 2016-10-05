@@ -19,14 +19,16 @@ import scala.util.Try
 
 abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matchers with WebBrowser with Checkpoints with Eventually with BeforeAndAfterEach with BeforeAndAfterAll {
   override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected = true
+
 }
 
 class HelloWorld extends AcceptanceSpec {
 
-  val implicitTimeout = 20
+  val implicitTimeout = 10
   val scriptTimeout = 30
   val pageLoadTimeout = 30
 
+  System.setProperty("webdriver.chrome.driver","./src/test/resources/chromedriver")
   implicit val webDriver: WebDriver = new ChromeDriver() //FirefoxDriver()
   object Smoke extends Tag("com.expedia.Smoke")
 
@@ -43,23 +45,22 @@ class HelloWorld extends AcceptanceSpec {
 
 
     scenario(s"Search for a Hotel from Homepageof UK",Smoke) {
+
+     assume (isSiteUp,"HealthCheck failed")
      Given("The user lands on the homepage")
 
       go to host
-      assertResult(true,"Home page loading takes more time ") {
-        eventually {
-          Try(executeScript("return document.readyState == 'complete'")(webDriver).toString().toBoolean).getOrElse(false)
-        }
-      }
+      assertResult(Succeeded,"Home page loading takes more time ") { eventually { isPageFinishedLoading shouldBe true  } }
 
       When("The user enters a destination")
       val hotelTab: WebElement =Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
       click on hotelTab
       var destination: TextField = Try(textField("hotel-destination")(webDriver)).getOrElse(null)
-      //new Actions(webDriver).moveToElement(webDriver.findElement(By.id("hotel-destination"))).perform();
-      //textField("hotel-destination").value = "Cheese!"
+      //textField("hotel-destination").value = "Las Vegas"
       destination.value ="Las Vegas"
+
       closeTypeAhead
+
       pageTitle should include("Travel Deals")
 
       And ("Click on search")
@@ -97,7 +98,7 @@ class HelloWorld extends AcceptanceSpec {
 
     val typeAheadClose: WebElement = Try(webDriver.findElement(By.id("typeahead-close"))).getOrElse(null)
     try {
-      val wait = new WebDriverWait(webDriver, 5)
+      val wait = new WebDriverWait(webDriver, 3)
       wait.until(ExpectedConditions.elementToBeClickable(By.id("typeahead-close")))
       if (typeAheadClose != null)
       {
@@ -110,6 +111,20 @@ class HelloWorld extends AcceptanceSpec {
       case n: NullPointerException => n
     }
 
+  }
+  def isSiteUp() = {
+
+    go to "http://www.expedia.co.uk/isWorking"
+    eventually {
+      pageSource.contains("Status is success")
+    }
+  }
+
+  def isPageFinishedLoading(): Boolean = {
+    val isPageLoaded = Try(executeScript("return document.readyState == 'complete'")(webDriver).toString().toBoolean).getOrElse(false)
+    val isUitkLoaded = Try(executeScript("return typeof uitk!='undefined' && uitk.readyState")(webDriver).toString().toBoolean).getOrElse(false)
+    //val isAjaxCallsEmpty = Try(executeScript("return jQuery.active == 0")(webDriver).toString().toBoolean).getOrElse(false)
+    isPageLoaded && isUitkLoaded
   }
 }
 
