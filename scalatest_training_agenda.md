@@ -36,10 +36,14 @@
 6. Ignore scenario / Ignore feature
 7. Regular asserts vs CheckPoints with AssertResults
 8. Assume
-2. Template
-  * Land on a page
-  * Wait for page to load
-  * Check for element before interacting
-  * Act on element
-  * Check if the actiion happened
-  * Wait for the expected next event
+
+# Class III - Oct 11th 2016 - Tuesday
+1. Timeouts / Waiting / Implicit and Explicit waiting
+2. Page Object Model
+3. Fixtures
+4. Handling transient elements
+5. Reliable Test 
+ 
+# Class IV
+1. How to use EWE ScalaTest Library
+  
