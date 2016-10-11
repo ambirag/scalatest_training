@@ -18,7 +18,7 @@ import scala.util.Try
   * Created by rambighananthan on 9/26/16.
   */
 
-
+@Ignore
 class Lesson2 extends AcceptanceSpec with ParallelTestExecution  {
 
   object L1 extends Tag("com.expedia.l1")

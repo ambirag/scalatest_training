@@ -21,7 +21,7 @@ abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matche
   override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected = true
 
 }
-
+@Ignore
 class HelloWorld extends AcceptanceSpec {
 
   val implicitTimeout = 10
