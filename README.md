@@ -40,10 +40,13 @@
 # Class III - Oct 11th 2016 - Tuesday
 1. Timeouts / Waiting / Implicit and Explicit waiting
 2. Page Object Model
-3. Fixtures
-4. Handling transient elements
+3. Fixtures / withFixture
+4. Handling transient(interstitial, typeahead) elements
 5. Reliable Test 
  
 # Class IV
-1. How to use EWE ScalaTest Library
+1. EWE ScalaTest Library and how to use?
+2. Look at MultiItemCKO example trunk/checkout.ui/acceptanceTest/com/expedia/checkout/micko/mickofh
+3. How to set AB Buckets
+2. How to contribute to EWE ScalaTest library
   
