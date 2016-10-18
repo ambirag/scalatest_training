@@ -44,7 +44,7 @@
 4. Handling transient(interstitial, typeahead) elements
 5. Reliable Test 
  
-# Class IV
+# Class IV - Oct 18th 2016 - Tuesday
 1. EWE ScalaTest Library and how to use?
   - http://ewegithub.sb.karmalab.net/EWE/commons-test
   - http://ewegithub.sb.karmalab.net/EWE/commons-ui-test
