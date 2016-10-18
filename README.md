@@ -46,6 +46,9 @@
  
 # Class IV
 1. EWE ScalaTest Library and how to use?
+  - http://ewegithub.sb.karmalab.net/EWE/commons-test
+  - http://ewegithub.sb.karmalab.net/EWE/commons-ui-test
+  - http://ewegithub.sb.karmalab.net/EWE/commons-ui-expweb
 2. Look at MultiItemCKO example trunk/checkout.ui/acceptanceTest/com/expedia/checkout/micko/mickofh
 3. How to set AB Buckets
 2. How to contribute to EWE ScalaTest library
