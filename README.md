@@ -24,7 +24,8 @@
 ## Introducing Different UI Automation Frameworks
 1. How to choose a framework?
 2. Scala CheetSheet
-* [Scala Test Syntax Cheesheets](http://docs.scala-lang.org/cheatsheets/)
+* [Scala Syntax Cheesheets](http://docs.scala-lang.org/cheatsheets/)
+* [Scala Test Syntax Cheesheets](http://www.scalatest.org/at_a_glance/FlatSpec)
 3. Specs
 
 # Class II - Oct 4th 2016 - Tuesday
