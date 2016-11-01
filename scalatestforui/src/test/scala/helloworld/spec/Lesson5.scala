@@ -3,12 +3,12 @@ package helloworld.spec
 
 import java.util.concurrent.TimeUnit
 
-import helloworld.spec.pagemodel.HomePage
+import helloworld.spec.pagemodel.{HotelSearchResultsPage, HomePage}
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.time.{Millis, Seconds, Span}
-
+//import org.log4j.LoggerFactory
 //import org.openqa.selenium.firefox.MarionetteDriver
 import org.openqa.selenium._
 import org.scalatest._
@@ -20,10 +20,10 @@ import scala.util.{Random, Try}
   */
 
 
-class Lesson3 extends AcceptanceSpec with ParallelTestExecution {
+class Lesson5 extends AcceptanceSpec  {
 
   object l3 extends Tag("com.expedia.l3")
-  object l4 extends Tag("com.expedia.l4")
+  object l5 extends Tag("com.expedia.l5")
 
   val implicitTimeout = 10
   val scriptTimeout = 30
@@ -36,82 +36,31 @@ class Lesson3 extends AcceptanceSpec with ParallelTestExecution {
 
   val host = "https://wwwexpediacouk.trunk.sb.karmalab.net/"
   info("Making sure that the docweb site is working ")
-
   feature("Hotel Search") {
 
     val timeouts = webDriver.manage().timeouts()
     timeouts.pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS)
     timeouts.setScriptTimeout(scriptTimeout, TimeUnit.SECONDS)
     timeouts.implicitlyWait(implicitTimeout, TimeUnit.SECONDS)
+    //val log = LoggerFactory.getLogger(getClass)
 
 
-    scenario(s"Search for a Hotel from Homepageof UK without using fixtures", l3) {
-
-      assume(isSiteUp, "HealthCheck failed")
-      Given("The user lands on the homepage")
-      go to host
-      assertResult(Succeeded, "Home page loading takes more time ") {eventually { isPageFinishedLoading shouldBe true } }
-
-      When("The user enters a destination")
-      val homePage = new HomePage(webDriver)
-      eventually { assertResult(true, "home page SW takes more time to show hotels tab") { homePage.lobTabs.hotelTab.isDisplayed} }
-      click on homePage.lobTabs.hotelTab
-
-      homePage.hotelSearchWizard.destination.value = "Las Vegas"
-      closeTypeAhead
-      homePage.hotelSearchWizard.adult.value = "1"
-      //verify what you set immediately
-      assertResult(Succeeded, "Numbe of adults should be 1") {
-        homePage.hotelSearchWizard.adult.value shouldBe "1"
-      }
-      homePage.hotelSearchWizard.checkinDate.value = "15/11/2016"
-      homePage.hotelSearchWizard.checkoutDate.value = "18/11/2016"
-
-      //based on elements check the status using eventually
-      //val checkbox = webDriver.findElement(By.id("hotel-add-flight-checkbox"))
-      eventually {
-        assertResult(Succeeded, "Check box to select Add a flight is not selected by default") {
-          homePage.hotelSearchWizard.addFlight.isSelected shouldBe false
-        }
-      }
-
-      //bad way to assert
-      homePage.hotelSearchWizard.adult.isDisplayed shouldBe true
-      homePage.hotelSearchWizard.checkinDate.isDisplayed shouldBe true
-      homePage.hotelSearchWizard.destination.isDisplayed shouldBe true
-
-      //best practice for assert
-      val cp = new Checkpoint
-
-      cp { assertResult(Succeeded, "Adult not displayed") { homePage.hotelSearchWizard.adult.isDisplayed shouldBe true}}
-      cp { assertResult(Succeeded, "checkin date is not displayed") { homePage.hotelSearchWizard.checkinDate.isDisplayed shouldBe true}}
-      cp {assertResult(Succeeded, "HotelsearchDestination is not displayed") {homePage.hotelSearchWizard.destination.isDisplayed shouldBe true}}
-      cp.reportAll()
-
-      And("Click on search")
-      //waitUntilElementExist(homePage.hotelSearchWizard.searchButton, webDriver)
-      click on homePage.hotelSearchWizard.searchButton
-      waitForPageInterstitials()
-
-      Then("User should land on Hotel Search Results page")
-      assertResult(true,"invalid url:"+currentUrl) {currentUrl.contains("Hotel-Search")}
-    }
-
-    //====================================================
-
-    scenario(s"Search for a Hotel from Homepageof UK using fixtures", l4) {
+    scenario(s"Search for a Hotel from Homepageof UK using fixtures", l5) {
 
       assume(isSiteUp, "HealthCheck failed")
       Given("The user lands on the homepage")
       go to host
       val h = fixture()
       assertResult(Succeeded, "Home page loading takes more time ") {eventually(Timeout(Span(15, Seconds)), interval ( Span(200, Millis))) { isPageFinishedLoading shouldBe true } }
+      markup ("Homepage successfull loaded")
+      assertResult(false,"this page has internal errors"){isErrorPage(webDriver)}
+      markup ("No Internal errors on page")
 
       When("The user enters a destination")
       val homePage = new HomePage(webDriver)
       eventually { assertResult(true, "home page SW takes more time to show hotels tab") { homePage.lobTabs.hotelTab.isDisplayed} }
       click on homePage.lobTabs.hotelTab
-
+      markup ("Clicked on Hotesl tab")
       h.fillHotelSearch(homePage)
 
       //based on elements check the status using eventually
@@ -132,10 +81,25 @@ class Lesson3 extends AcceptanceSpec with ParallelTestExecution {
 
       And("Click on search")
       click on homePage.hotelSearchWizard.searchButton
+
       waitForPageInterstitials()
 
       Then("User should land on Hotel Search Results page")
       assertResult(true,"invalid url:"+currentUrl) {currentUrl.contains("Hotel-Search")}
+      assertResult(Succeeded, "HSR page loading takes more time ") {eventually(Timeout(Span(15, Seconds)), interval ( Span(200, Millis))) { isPageFinishedLoading shouldBe true } }
+
+      isErrorPage(webDriver)
+
+      val HotelSearchResultsPage = new HotelSearchResultsPage(webDriver)
+      var hsrButton = Try(HotelSearchResultsPage.firstHotelButton).getOrElse(null)
+      if (hsrButton == null) {
+        eventually {
+          hsrButton = Try(HotelSearchResultsPage.firstHotelButton).getOrElse(null)
+          (hsrButton == null) should be(false)
+        }
+      }
+      HotelSearchResultsPage.firstHotelButtonClick()
+
     }
 
 
@@ -257,6 +221,12 @@ class Lesson3 extends AcceptanceSpec with ParallelTestExecution {
         failed
       case other => other
     }
+  }
+
+  def isErrorPage(driver: WebDriver) : Boolean = {
+
+    pageSource(driver).toLowerCase contains  "internal error"
+
   }
 
 }
