@@ -11,6 +11,7 @@
  - git clone https://ewegithub.sb.karmalab.net/rambighananthan/scalatest_training.git
  - sbt clean compile
  - sbt test (you should see a browser open and run a test)
+ - running one particular test sbt test-only helloworld.spec.Lesson5 -n l5 (this is the tag name)
 
 # Importing sbt project into Intellij
 - close IntelliJ
@@ -54,3 +55,22 @@
 3. How to set AB Buckets
 2. How to contribute to EWE ScalaTest library
   
+
+# Class V - Nov 1 2016 - Tuesday
+1. Discussing classic UI automaiton issues
+  - CKO Login module
+  - Interstitial
+  - Urgency Messages
+  - Scratchpad popup
+2. Understand Waiting in UI automation
+3. 
+3. Automation Best Practice Template
+  - Land on a page
+  - Verify landed page is completely loaded
+  - use isErrorPage to check if page has errors 
+  - Verify if it is the expected page
+  - Get the POM of the element to be interacted
+    - Check if it is null, poll until its available
+    - Interact with the element and assert or act
+  - Log every step of automation 
+4. Handling SSO login
