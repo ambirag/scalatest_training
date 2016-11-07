@@ -74,3 +74,9 @@
     - Interact with the element and assert or act
   - Log every step of automation 
 4. Handling SSO login
+
+# Class VI - Nov 7th 2016 - Monday
+  - Scala.js https://www.scala-js.org/ - https://www.scala-js.org/tutorial/basic/
+  -- `Scala.js is a compiler that compiles Scala source code to equivalent Javascript code. That lets you write Scala code that you can run in a web browser, or other environments (Chrome plugins, Node.js, etc.) where Javascript is supported.`
+  - Tables to test scenarios with multiple inputs (POS, different inputs,etc)
+  - Guillaume to guest lecture
