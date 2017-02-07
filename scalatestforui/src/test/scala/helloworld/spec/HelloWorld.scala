@@ -28,12 +28,12 @@ abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matche
 
 class HelloWorld extends AcceptanceSpec {
 
-  val implicitTimeout = 10
+  val implicitTimeout = 30
   val scriptTimeout = 30
   val pageLoadTimeout = 30
 
-  implicit override val patienceConfig = PatienceConfig(timeout = scaled(Span(50, Seconds)), interval = scaled(Span(1, Seconds)))
-
+ // implicit override val patienceConfig = PatienceConfig(timeout = scaled(Span(50, Seconds)), interval = scaled(Span(1, Seconds)))
+  implicit override val patienceConfig = PatienceConfig(timeout = Span(50, Seconds), interval = Span(1, Seconds))
   System.setProperty("webdriver.chrome.driver","./src/test/resources/chromedriver")
 
   implicit val webDriver: WebDriver = new ChromeDriver() //FirefoxDriver()
@@ -48,7 +48,7 @@ class HelloWorld extends AcceptanceSpec {
     timeouts.pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS)
     timeouts.setScriptTimeout(scriptTimeout, TimeUnit.SECONDS)
     timeouts.implicitlyWait(implicitTimeout, TimeUnit.SECONDS)
-
+    //implicitlyWait(Span(10, Seconds))
 
     scenario(s"Search for a Hotel from Homepageof UK",Smoke) {
 
@@ -65,13 +65,12 @@ class HelloWorld extends AcceptanceSpec {
 
       When("The user enters a destination")
       var hotelTab: WebElement = null //Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
-
-      eventually {  hotelTab = Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
-        assertResult(Succeeded,"Hotel Tab button is not present"){
+      assertResult(Succeeded,"Hotel Tab button is not present") {
+        eventually {
+          hotelTab = Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
           hotelTab should not be null
         }
       }
-
       click on hotelTab
 
       /*ScalaTest's WebBrowser trait provides an easy and efficient way for manipulating input fields on the page. The trait supports the HTML5 elements as well,
