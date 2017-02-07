@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
 import org.openqa.selenium.{By, TimeoutException, WebDriver, WebElement}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.selenium.WebBrowser
+import org.scalatest.time.{Seconds, Span}
 import org.scalatest.{FeatureSpec, _}
 
 import scala.util.Try
@@ -31,7 +32,10 @@ class HelloWorld extends AcceptanceSpec {
   val scriptTimeout = 30
   val pageLoadTimeout = 30
 
+  implicit override val patienceConfig = PatienceConfig(timeout = scaled(Span(50, Seconds)), interval = scaled(Span(1, Seconds)))
+
   System.setProperty("webdriver.chrome.driver","./src/test/resources/chromedriver")
+
   implicit val webDriver: WebDriver = new ChromeDriver() //FirefoxDriver()
   object Smoke extends Tag("com.expedia.Smoke")
 
@@ -39,7 +43,6 @@ class HelloWorld extends AcceptanceSpec {
   info("Making sure that the docweb site is working ")
 
   feature("Hotel Search") {
-
 
     val timeouts = webDriver.manage().timeouts()
     timeouts.pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS)
@@ -53,25 +56,56 @@ class HelloWorld extends AcceptanceSpec {
      Given("The user lands on the homepage")
 
       go to host
-      assertResult(Succeeded,"Home page loading takes more time ") { eventually { isPageFinishedLoading shouldBe true  } }
 
-      When("The user enters a destination")
-      val hotelTab: WebElement =Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
-      click on hotelTab
-      var destination: TextField = Try(textField("hotel-destination")(webDriver)).getOrElse(null)
-      //textField("hotel-destination").value = "Las Vegas"
-      destination.value ="Las Vegas"
+      //isPageFinishedLoading shouldBe true // NOT A GOOD PRACTICE
 
-      closeTypeAhead
+      assertResult(Succeeded,"Home page loading takes more time ") { eventually { isPageFinishedLoading shouldBe true  } } //GOOD Practice to use Eventually and assertResult
 
       pageTitle should include("Travel Deals")
+
+      When("The user enters a destination")
+      var hotelTab: WebElement = null //Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
+
+      eventually {  hotelTab = Try(webDriver.findElement(By.id("tab-hotel-tab"))).getOrElse(null)
+        assertResult(Succeeded,"Hotel Tab button is not present"){
+          hotelTab should not be null
+        }
+      }
+
+      click on hotelTab
+
+      /*ScalaTest's WebBrowser trait provides an easy and efficient way for manipulating input fields on the page. The trait supports the HTML5 elements as well,
+      like tel input type. For each input field type, there is a method for querying it, like if you search for a single selection, you can use the singleSel method.
+      There are two method definitions for each type, one with a single String parameter and one with a Query parameter. By default, the one with String parameter tries
+      to find the element by Id matching the parameter, and waits until the configured implicit wait timeout. Then it tries to find by the input field's name attribute.
+      This can slow down the test, so there is a better approach for using this feature efficiently. This WebBrowser trait contains several Query types as NameQuery, CssQuery,
+      etc. which can be used for exact element matching. Long story short, there is an example how to use these embedded input fields:
+       */
+      //var destination: TextField = Try(textField("hotel-destination")(webDriver)).getOrElse(null) // NOT GOOD PRACTICE
+      var destination: TextField = Try(textField(IdQuery("hotel-destination"))).getOrElse(null) //GOOD PRACTICE
+
+      destination.value ="Las Vegas"
+      //textField(IdQuery("hotel-destination")).value = "Las Vegas" // You can also do this
+
+      closeTypeAhead //Best practice - handling all nuisance and unexpected , transient behaviours
 
       And ("Click on search")
       val searchButton: WebElement = Try(webDriver.findElement(By.id("search-button"))).getOrElse(null)
       click on searchButton
 
+
       Then ("User should land on Hotel Search Results page")
-      currentUrl.contains("Hotel-Search")
+      assertResult(Succeeded,"HSR page loading takes more time ") { eventually { isPageFinishedLoading shouldBe true  } } //GOOD Practice to use Eventually and assertResult
+
+     // validation without Checkpoints
+     // currentUrl.contains("Hotel-Search")
+     // val summary: WebElement = Try(webDriver.findElement(By.className("playback-summary-data"))).getOrElse(null) //GOOD PRACTICE
+     // assertResult(SucceededStatus,"Search button is shown even after clicking it"){ summary.isDisplayed shouldBe true}
+
+      val cp = new Checkpoint // good practice to use Checkpoint
+      cp {currentUrl.contains("Hotel-Search")}
+       val summary: WebElement = Try(webDriver.findElement(By.className("playback-summary-data"))).getOrElse(null) //GOOD PRACTICE
+      cp {assertResult(SucceededStatus,"Search button is shown even after clicking it"){ summary.isDisplayed shouldBe true} }
 
      }
   }
