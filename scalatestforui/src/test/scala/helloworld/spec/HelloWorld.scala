@@ -1,12 +1,11 @@
 
 package helloworld.spec
 
-//import org.openqa.selenium.firefox.MarionetteDriver
 import java.util.concurrent.TimeUnit
 
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
-import org.openqa.selenium.{TimeoutException, By, WebDriver, WebElement}
+import org.openqa.selenium.{By, TimeoutException, WebDriver, WebElement}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.selenium.WebBrowser
 import org.scalatest.{FeatureSpec, _}
@@ -15,13 +14,17 @@ import scala.util.Try
 
 /**
   * Created by rambighananthan on 9/26/16.
+  * ScalaTest Lession 2
+  * Tags; Querying other Elements: Parallel / Sequential Execution / Before and After Hooks / Quiv vs CLose / Ignore Scenario / Ignore Feature / Regular Asserts vs CheckPoints with AssertResults
+  *
   */
+
 
 abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matchers with WebBrowser with Checkpoints with Eventually with BeforeAndAfterEach with BeforeAndAfterAll {
   override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected = true
 
 }
-@Ignore
+
 class HelloWorld extends AcceptanceSpec {
 
   val implicitTimeout = 10
