@@ -21,7 +21,7 @@
 - delete project/target folder
 - reopen IntelliJ and import as a sbt project
 
-# Class I - Sep 26th 2016 - Tuesday
+# Class I - Jan 31st 2017 - Tuesday
 ## Introducing Different UI Automation Frameworks
 1. How to choose a framework?
 2. Scala CheetSheet
@@ -29,15 +29,15 @@
 * [Scala Test Syntax Cheesheets](http://www.scalatest.org/at_a_glance/FlatSpec)
 3. Specs
 
-# Class II - Oct 4th 2016 - Tuesday
+# Class II - Feb 7th 2017 - Tuesday
 1. Tags
-2. Querying other elements (Checkbox, Texifield,etc)
-3. Parallel / Sequence Execution
-4. Before / After hooks
-5. Quit vs Close
-6. Ignore scenario / Ignore feature
-7. Regular asserts vs CheckPoints with AssertResults
-8. Assume
+2. Querying other elements (Checkbox, Texifield and findElement)
+3. Before / After hooks
+4. Quit vs Close
+5. Ignore scenario / Ignore feature
+6. Regular asserts vs CheckPoints with AssertResults
+7. Assume
+8. implicit keyword
 
 # Class III - Oct 11th 2016 - Tuesday
 1. Timeouts / Waiting / Implicit and Explicit waiting
@@ -45,6 +45,7 @@
 3. Fixtures / withFixture
 4. Handling transient(interstitial, typeahead) elements
 5. Reliable Test 
+6. Parallel / Sequence Execution
  
 # Class IV - Oct 18th 2016 - Tuesday
 1. EWE ScalaTest Library and how to use?
