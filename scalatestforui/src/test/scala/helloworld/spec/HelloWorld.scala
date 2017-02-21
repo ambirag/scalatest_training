@@ -28,11 +28,11 @@ abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matche
 
 class HelloWorld extends AcceptanceSpec {
 
-  val implicitTimeout = 30
+  val implicitTimeout = 20
   val scriptTimeout = 30
   val pageLoadTimeout = 30
 
- // implicit override val patienceConfig = PatienceConfig(timeout = scaled(Span(50, Seconds)), interval = scaled(Span(1, Seconds)))
+  //implicit override val patienceConfig = PatienceConfig(timeout = scaled(Span(50, Seconds)), interval = scaled(Span(1, Seconds)))
   implicit override val patienceConfig = PatienceConfig(timeout = Span(50, Seconds), interval = Span(1, Seconds))
   System.setProperty("webdriver.chrome.driver","./src/test/resources/chromedriver")
 
@@ -48,7 +48,10 @@ class HelloWorld extends AcceptanceSpec {
     timeouts.pageLoadTimeout(pageLoadTimeout, TimeUnit.SECONDS)
     timeouts.setScriptTimeout(scriptTimeout, TimeUnit.SECONDS)
     timeouts.implicitlyWait(implicitTimeout, TimeUnit.SECONDS)
-    //implicitlyWait(Span(10, Seconds))
+
+    // NEVER USE IMPLICIT AND EXPLICIT WAITS AT THE SAME TIME. IMPLICIT WAIT OVERRIDES EXPLICIT WAITS AND WHEN USED TOGETHER RESULTS IN CONFUSING BEHAVIOUR
+    // http://stackoverflow.com/questions/15164742/combining-implicit-wait-and-explicit-wait-together-results-in-unexpected-wait-ti?__s=mt1thrrnxzar9qq41eep#answer-15174978?utm_medium=email&utm_campaign=elemental-selenium-ruby&utm_source=47-waiting
+    // http://stackoverflow.com/questions/10404160/when-to-use-explicit-wait-vs-implicit-wait-in-selenium-webdriver
 
     scenario(s"Search for a Hotel from Homepageof UK",Smoke) {
 
@@ -97,15 +100,15 @@ class HelloWorld extends AcceptanceSpec {
       assertResult(Succeeded,"HSR page loading takes more time ") { eventually { isPageFinishedLoading shouldBe true  } } //GOOD Practice to use Eventually and assertResult
 
      // validation without Checkpoints
-     // currentUrl.contains("Hotel-Search")
-     // val summary: WebElement = Try(webDriver.findElement(By.className("playback-summary-data"))).getOrElse(null) //GOOD PRACTICE
-     // assertResult(SucceededStatus,"Search button is shown even after clicking it"){ summary.isDisplayed shouldBe true}
+      currentUrl.contains("Hotel-Search")
+      //val summary: WebElement = Try(webDriver.findElement(By.className("playback-summary-data"))).getOrElse(null) //GOOD PRACTICE
+      //assertResult(SucceededStatus,"Search button is shown even after clicking it") {eventually { summary.isDisplayed shouldBe true}}
 
-      val cp = new Checkpoint // good practice to use Checkpoint
-      cp {currentUrl.contains("Hotel-Search")}
-       val summary: WebElement = Try(webDriver.findElement(By.className("playback-summary-data"))).getOrElse(null) //GOOD PRACTICE
-      cp {assertResult(SucceededStatus,"Search button is shown even after clicking it"){ summary.isDisplayed shouldBe true} }
-
+      //val cp = new Checkpoint // good practice to use Checkpoint
+      //cp {currentUrl.contains("Hotel-Search")}
+       //val summary: WebElement = Try(webDriver.findElement(By.id("wizardSummaryStartDate"))).getOrElse(null) //GOOD PRACTICE
+      //cp {assertResult(Succeeded,"HSR date info is not found"){ summary.isDisplayed shouldBe true} }
+      //cp.reportAll()
      }
   }
 
