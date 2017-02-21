@@ -37,9 +37,9 @@
 5. Ignore scenario / Ignore feature
 6. Regular asserts vs CheckPoints with AssertResults
 7. Assume
-8. implicit keyword
+8. implicit vs Explicit keyword
 
-# Class III - Oct 11th 2016 - Tuesday
+# Class III - Feb 21st 2017 - Tuesday
 1. Timeouts / Waiting / Implicit and Explicit waiting
 2. Page Object Model
 3. Fixtures / withFixture
