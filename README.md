@@ -53,8 +53,10 @@
   - http://ewegithub.sb.karmalab.net/EWE/commons-ui-test
   - http://ewegithub.sb.karmalab.net/EWE/commons-ui-expweb
 2. Look at MultiItemCKO example trunk/checkout.ui/acceptanceTest/com/expedia/checkout/micko/mickofh
+3. Creating neat APIs using Implicit / Currying
+4. Creating automaiton using Scala Worksheet
 3. How to set AB Buckets
-2. How to contribute to EWE ScalaTest library
+2. How to contribute to EWE ScalaTest library (Working Group meeting : Every Thursday 5pm GMT(9AM PST / 10:30PM IST)
   
 
 # Class V - Nov 1 2016 - Tuesday
