@@ -47,7 +47,7 @@
 5. Reliable Test 
 6. Parallel / Sequence Execution
  
-# Class IV - Oct 18th 2016 - Tuesday
+# Class IV - Feb 28th 2017 - Tuesday
 1. EWE ScalaTest Library and how to use?
   - http://ewegithub.sb.karmalab.net/EWE/commons-test
   - http://ewegithub.sb.karmalab.net/EWE/commons-ui-test
