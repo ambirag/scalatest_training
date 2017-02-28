@@ -8,15 +8,15 @@ import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
 import org.openqa.selenium.{By, OutputType, TakesScreenshot, TimeoutException, WebDriver, WebElement}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.time.{Millis, Seconds, Span}
-import org.scalatest.{Failed, ParallelTestExecution, Succeeded, Tag}
+import org.scalatest._
 //import org.openqa.selenium.firefox.MarionetteDriver
 import scala.util.{Random, Try}
 
 /**
   * Created by rambighananthan on 2/21/17.
   */
-
-class Lesson3 extends AcceptanceSpec with ParallelTestExecution {
+@Ignore
+class Lesson3 extends AcceptanceSpec1 with ParallelTestExecution {
 
   object l3 extends Tag("com.expedia.l3")
   object l4 extends Tag("com.expedia.l4")

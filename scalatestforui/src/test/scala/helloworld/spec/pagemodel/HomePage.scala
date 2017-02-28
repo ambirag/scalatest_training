@@ -1,15 +1,9 @@
 package helloworld.spec.pagemodel
 
-import helloworld.spec.AcceptanceSpec
-import helloworld.spec.AcceptanceSpec
-import org.openqa.selenium.By
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
+//import helloworld.spec.AcceptanceSpec
+import com.expedia.www.commons.expweb.pagemodel.Page
+import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
 import org.openqa.selenium.{By, WebDriver, WebElement}
-import org.scalatest.selenium.WebBrowser.Checkbox
-import org.scalatest.selenium.WebBrowser.SingleSel
-import org.scalatest.selenium.WebBrowser.TextField
-import org.scalatest.selenium.WebBrowser.click
 
 import scala.util.Try
 
@@ -17,7 +11,7 @@ import scala.util.Try
   * Created by rambighananthan on 2/21/17.
   */
 
-class HomePage(driver: WebDriver) extends AcceptanceSpec {
+class HomePage(driver: WebDriver) extends Page(driver)  {
 
   val pageIdValue = "Homepage"
   val pageURL = ""
@@ -50,6 +44,17 @@ class HomePage(driver: WebDriver) extends AcceptanceSpec {
   def searchButtonClick(): Unit = {
     val searchButton: WebElement = Try(driver.findElement(By.id("search-button"))).getOrElse(null)
     click on searchButton
+  }
+
+  implicit def waitForElement(locator: By) : WebElement = {
+      val predicate: WebDriver => WebElement = _.findElement(locator)
+      new WebDriverWait(driver, 20).withMessage(s"waiting for element '$locator' on page '${driver.getCurrentUrl}'").until(ExpectedConditions.presenceOfElementLocated(locator))
+  }
+
+  def searchButtonClick2(): Unit = {
+    val searchButton = By.id("search-button")
+    searchButton.click()
+
   }
 
   def activitiesTabClick(): Unit ={

@@ -4,12 +4,15 @@ package helloworld.spec.pagemodel
   * Created by rambighananthan on 2/21/17.
   */
 
-import helloworld.spec.AcceptanceSpec
+//import helloworld.spec.AcceptanceSpec
+import com.expedia.www.commons.expweb.pagemodel.Page
+
+
+//import helloworld.spec.AcceptanceSpec
 import org.openqa.selenium.{By, WebDriver, WebElement}
-import org.scalatest.concurrent.Eventually
 import org.scalatest.time.{Seconds, Span}
 
-class HotelSearchResultsPage(driver : WebDriver) extends AcceptanceSpec with Eventually  {
+class HotelSearchResultsPage(driver : WebDriver) extends Page(driver) {
   val pageIdValue = "page.Hotel-Search"
   val pageURL = "Hotel-Search?"
 

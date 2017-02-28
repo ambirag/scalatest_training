@@ -21,12 +21,12 @@ import scala.util.Try
   */
 
 
-abstract class AcceptanceSpec extends FeatureSpec with GivenWhenThen with Matchers with WebBrowser with Checkpoints with Eventually with BeforeAndAfterEach with BeforeAndAfterAll {
+abstract class AcceptanceSpec1 extends FeatureSpec with GivenWhenThen with Matchers with WebBrowser with Checkpoints with Eventually with BeforeAndAfterEach with BeforeAndAfterAll {
   override val invokeBeforeAllAndAfterAllEvenIfNoTestsAreExpected = true
 
 }
-
-class HelloWorld extends AcceptanceSpec {
+@Ignore
+class HelloWorld extends AcceptanceSpec1 {
 
   val implicitTimeout = 20
   val scriptTimeout = 30
