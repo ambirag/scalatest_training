@@ -59,15 +59,14 @@
 2. How to contribute to EWE ScalaTest library (Working Group meeting : Every Thursday 5pm GMT(9AM PST / 10:30PM IST)
   
 
-# Class V - Nov 1 2016 - Tuesday
-1. Discussing classic UI automaiton issues
-  - CKO Login module
+# Class V - Mar 7th 2017 - Tuesday
+1. Looping with Data
+2. Discussing classic UI automaiton issues
   - Interstitial
   - Urgency Messages
   - Scratchpad popup
-2. Understand Waiting in UI automation
-3. 
 3. Automation Best Practice Template
+  - Call health check
   - Land on a page
   - Verify landed page is completely loaded
   - use isErrorPage to check if page has errors 
