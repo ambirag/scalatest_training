@@ -88,13 +88,13 @@ class HomePage(driver: WebDriver) extends Page(driver)  {
   }
 
   object hotelSearchWizard{
-    val adult: SingleSel = Try(singleSel("hotel-1-adults")(driver)).getOrElse(null)
+    val adult: SingleSel = Try(singleSel("hotel-1-adults-hp-hotel")(driver)).getOrElse(null)
     val children: SingleSel = Try(singleSel("hotel-1-children")(driver)).getOrElse(null)
-    val destination: TextField = Try(textField("hotel-destination")(driver)).getOrElse(null)
-    val checkinDate: TextField = Try(textField("hotel-checkin")(driver)).getOrElse(null)
-    val checkoutDate: TextField = Try(textField("hotel-checkout")(driver)).getOrElse(null)
+    val destination: TextField = Try(textField("hotel-destination-hp-hotel")(driver)).getOrElse(null)
+    val checkinDate: TextField = Try(textField("hotel-checkin-hp-hotel")(driver)).getOrElse(null)
+    val checkoutDate: TextField = Try(textField("hotel-checkout-hp-hotel")(driver)).getOrElse(null)
     val typeAheadClose: WebElement =Try(driver.findElement(By.id("typeahead-close"))).getOrElse(null)
-    val homePageSearchWizard: WebElement = Try(driver.findElement(By.id("new-homepage-search-wizard"))).getOrElse(null)
+    val homePageSearchWizard: WebElement = Try(driver.findElement(By.id("wizard-tabs"))).getOrElse(null)
     val rooms: SingleSel = Try(singleSel("hotel-rooms")(driver)).getOrElse(null)
     val childAge1: SingleSel = Try(singleSel("hotel-1-age-select-1")(driver)).getOrElse(null)
     val childAge2: SingleSel = Try(singleSel("hotel-1-age-select-2")(driver)).getOrElse(null)
@@ -116,8 +116,12 @@ class HomePage(driver: WebDriver) extends Page(driver)  {
     val homePageSearchWizard: WebElement = Try(driver.findElement(By.id("new-homepage-search-wizard"))).getOrElse(null)
   }
 
+  object hotelLobTabs {
+    val hotelLobTab: WebElement =Try(driver.findElement(By.id("tab-hotel-tab-hp"))).getOrElse(null)
+
+  }
   object lobTabs {
-    val hotelTab: Option[WebElement] =Try(driver.findElement(By.id("tab-hotel-tab"))).toOption
+    val hotelTab: Option[WebElement] =Try(driver.findElement(By.id("tab-hotel-tab-hp"))).toOption
     hotelTab match {
       case Some(field) => field.getTagName
       case None =>
