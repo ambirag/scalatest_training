@@ -88,17 +88,17 @@ class HomePage(driver: WebDriver) extends Page(driver)  {
   }
 
   object hotelSearchWizard{
-    val adult: SingleSel = Try(singleSel("hotel-1-adults-hp-hotel")(driver)).getOrElse(null)
+    val adult: SingleSel = Try(singleSel(IdQuery("hotel-1-adults-hp-hotel"))(driver)).getOrElse(null)
     val children: SingleSel = Try(singleSel("hotel-1-children")(driver)).getOrElse(null)
-    val destination: TextField = Try(textField("hotel-destination-hp-hotel")(driver)).getOrElse(null)
-    val checkinDate: TextField = Try(textField("hotel-checkin-hp-hotel")(driver)).getOrElse(null)
-    val checkoutDate: TextField = Try(textField("hotel-checkout-hp-hotel")(driver)).getOrElse(null)
-    val typeAheadClose: WebElement =Try(driver.findElement(By.id("typeahead-close"))).getOrElse(null)
+    val destination: TextField = Try(textField(IdQuery("hotel-destination-hp-hotel"))(driver)).getOrElse(null)
+    val checkinDate: TextField = Try(textField(IdQuery("hotel-checkin-hp-hotel"))(driver)).getOrElse(null)
+    val checkoutDate: TextField = Try(textField(IdQuery("hotel-checkout-hp-hotel"))(driver)).getOrElse(null)
+    val typeAheadClose: WebElement =Try(driver.findElement(By.className("datepicker-close"))).getOrElse(null)
     val homePageSearchWizard: WebElement = Try(driver.findElement(By.id("wizard-tabs"))).getOrElse(null)
     val rooms: SingleSel = Try(singleSel("hotel-rooms")(driver)).getOrElse(null)
     val childAge1: SingleSel = Try(singleSel("hotel-1-age-select-1")(driver)).getOrElse(null)
     val childAge2: SingleSel = Try(singleSel("hotel-1-age-select-2")(driver)).getOrElse(null)
-    val searchButton: WebElement = Try(driver.findElement(By.id("search-button"))).getOrElse(null)
+    val searchButton: WebElement = Try(driver.findElement(By.className("btn-primary"))).getOrElse(null)
     val addFlight: Checkbox = Try(checkbox("hotel-add-flight-checkbox")(driver)).getOrElse(null)
   }
 
