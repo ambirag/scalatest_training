@@ -52,7 +52,7 @@ class HomePage(driver: WebDriver) extends Page(driver)  {
   }
 
   def searchButtonClick2(): Unit = {
-    val searchButton = By.id("search-button")
+    val searchButton = By.id("hotel-add-flight-checkbox-hp-hotel")
     searchButton.click()
 
   }
@@ -86,7 +86,10 @@ class HomePage(driver: WebDriver) extends Page(driver)  {
     page.contains("pageId = " + pageIdValue ) || page.contains ("logging.pageName = \"" + pageIdValue)
 
   }
-
+  def enterText(): Unit ={
+    var addFlightText = By.id("hotel-flight-origin-hp-hotel")
+    addFlightText.sendKeys("Las Vegas")
+  }
   object hotelSearchWizard{
     val adult: SingleSel = Try(singleSel(IdQuery("hotel-1-adults-hp-hotel"))(driver)).getOrElse(null)
     val children: SingleSel = Try(singleSel("hotel-1-children")(driver)).getOrElse(null)
@@ -100,6 +103,9 @@ class HomePage(driver: WebDriver) extends Page(driver)  {
     val childAge2: SingleSel = Try(singleSel("hotel-1-age-select-2")(driver)).getOrElse(null)
     val searchButton: WebElement = Try(driver.findElement(By.xpath("//*[@id=\"gcw-hotel-form-hp-hotel\"]/div[7]/label/button"))).getOrElse(null)
     val addFlight: Checkbox = Try(checkbox("hotel-add-flight-checkbox")(driver)).getOrElse(null)
+    val h1: WebElement = Try(driver.findElement(By.tagName("h1"))).getOrElse(null)
+
+
   }
 
   object flightSearchWizard {
@@ -127,4 +133,5 @@ class HomePage(driver: WebDriver) extends Page(driver)  {
       case None =>
     }
   }
+
 }
