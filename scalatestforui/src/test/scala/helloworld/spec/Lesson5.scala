@@ -91,7 +91,8 @@ class Lesson5 extends AcceptanceSpec1 with ExpwebUriBuilder with Matchers with P
           cp.reportAll()*/
 
           And("Click on search")
-          waitUntilElementVisibile(homePage.hotelSearchWizard.searchButton, webDriver)
+          //waitUntilElementExist(homePage.hotelSearchWizard.searchButton, webDriver)
+
           homePage.hotelSearchWizard.searchButton.click()
           waitForPageInterstitials()
 

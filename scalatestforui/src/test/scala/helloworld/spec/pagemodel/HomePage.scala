@@ -98,7 +98,7 @@ class HomePage(driver: WebDriver) extends Page(driver)  {
     val rooms: SingleSel = Try(singleSel("hotel-rooms")(driver)).getOrElse(null)
     val childAge1: SingleSel = Try(singleSel("hotel-1-age-select-1")(driver)).getOrElse(null)
     val childAge2: SingleSel = Try(singleSel("hotel-1-age-select-2")(driver)).getOrElse(null)
-    val searchButton: WebElement = Try(driver.findElement(By.className("btn-primary"))).getOrElse(null)
+    val searchButton: WebElement = Try(driver.findElement(By.xpath("//*[@id=\"gcw-hotel-form-hp-hotel\"]/div[7]/label/button"))).getOrElse(null)
     val addFlight: Checkbox = Try(checkbox("hotel-add-flight-checkbox")(driver)).getOrElse(null)
   }
 
