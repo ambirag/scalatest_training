@@ -53,10 +53,9 @@
   - http://ewegithub.sb.karmalab.net/EWE/commons-ui-test
   - http://ewegithub.sb.karmalab.net/EWE/commons-ui-expweb
 2. Look at MultiItemCKO example trunk/checkout.ui/acceptanceTest/com/expedia/checkout/micko/mickofh
-3. Creating neat APIs using Implicit / Currying
-4. Creating automaiton using Scala Worksheet
-3. How to set AB Buckets
-2. How to contribute to EWE ScalaTest library (Working Group meeting : Every Thursday 5pm GMT(9AM PST / 10:30PM IST)
+3. Creating automaiton using Scala Worksheet
+4. How to set AB Buckets
+5. How to contribute to EWE ScalaTest library (Working Group meeting : Every Thursday 5pm GMT(9AM PST / 10:30PM IST)
   
 
 # Class V - Mar 7th 2017 - Tuesday
@@ -77,7 +76,11 @@
   - Log every step of automation 
 4. Handling SSO login
 
-# Class VI - Nov 7th 2016 - Monday
+# Class VI - Mar 14th 2017 - Tuesday
+1. Switch - Alert
+2. Executing Java script (executeScript)
+3. Creating neat APIs using Implicit / Currying
+4. Understanding Gecko(https://github.com/mozilla/geckodriver/releases). Chrome Drivers(http://chromedriver.storage.googleapis.com/index.html) and Safari drivers (http://elementalselenium.com/tips/69-safari)
   - Scala.js https://www.scala-js.org/ - https://www.scala-js.org/tutorial/basic/
   -- `Scala.js is a compiler that compiles Scala source code to equivalent Javascript code. That lets you write Scala code that you can run in a web browser, or other environments (Chrome plugins, Node.js, etc.) where Javascript is supported.`
   - Tables to test scenarios with multiple inputs (POS, different inputs,etc)
