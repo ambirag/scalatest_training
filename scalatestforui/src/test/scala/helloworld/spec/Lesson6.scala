@@ -4,7 +4,8 @@ import java.util.concurrent.TimeUnit
 
 import com.expedia.www.commons.expweb.helper.{ExpwebUriBuilder, PointsOfSale}
 import helloworld.spec.pagemodel.HomePage
-import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.support.ui.{ExpectedConditions, WebDriverWait}
 import org.openqa.selenium.{By, OutputType, TakesScreenshot, TimeoutException, WebDriver, WebElement}
 import org.scalatest._
@@ -26,10 +27,14 @@ class Lesson6 extends AcceptanceSpec1 with ExpwebUriBuilder with Matchers with P
   val scriptTimeout = 30
   val pageLoadTimeout = 30
 
-  System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver")
-  System.setProperty("environment", "LIVE")
+  System.setProperty("webdriver.gecko.driver", "./src/test/resources/geckodriver")
+  System.setProperty("environment", "JENKINS_UNSTUBBED")
 
-  implicit val webDriver: WebDriver = new ChromeDriver()
+
+  var caps = DesiredCapabilities.firefox();
+  caps.setCapability("marionette", true);
+  caps.setCapability("acceptInsecureCerts",true)
+  implicit val webDriver: WebDriver = new FirefoxDriver(caps)
   //implicit override val patienceConfig = PatienceConfig(timeout = Span(30, Seconds), interval = Span(200, Millis))
 
 
@@ -90,12 +95,12 @@ class Lesson6 extends AcceptanceSpec1 with ExpwebUriBuilder with Matchers with P
                     }
                     cp.reportAll()
 
-          //val date=executeScript("document.getElementById(\"hotel-checkin-hp-hotel\").value").toString
-          //println("Date format")
-          //println(date)
+          val date=Try(executeScript("return document.getElementById(\"hotel-checkin-hp-hotel\").value").toString()).getOrElse(null)
+          println("Date format")
+          println(date)
           println(homePage.hotelSearchWizard.h1.getText)
           And("Click on search")
-          //waitUntilElementExist(homePage.hotelSearchWizard.searchButton, webDriver)
+
           homePage.searchButtonClick2()
           homePage.enterText
           homePage.hotelSearchWizard.searchButton.click()
